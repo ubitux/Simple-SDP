@@ -1,0 +1,11 @@
+v=0
+o=bell 53655765 2353687637 IN IP4 128.3.4.5
+s=Another test
+i=I wander what could happen to the SDP parsing libraries if the description in this field were longer than expected. Actually, this is not a short description, but perhaps we need to write a few more words in order to make them crash or cut the description. 
+c=IN IP4 kton.bell-tel.com
+t=3149328600 3149428600
+m=audio 5004 RTP/AVP 0 3 4 5
+a=rtpmap:0 PCMU/8000
+a=rtpmap:3 GSM/8000
+a=rtpmap:4 G723/8000
+a=rtpmap:5 DVI4/8000
