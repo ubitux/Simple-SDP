@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
+//#include <strings.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include "sdp.h"
@@ -156,7 +156,7 @@ struct sdp_payload *sdp_parse(const char *payload)
     if (!sdp)
         goto fail;
 
-    p = sdp->_payload = strdup(payload);
+    p = sdp->_payload = _strdup(payload);
     if (!p)
         goto fail;
 
