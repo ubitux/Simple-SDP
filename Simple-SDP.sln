@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Simple-SDP", "Simple-SDP\Simple-SDP.vcxproj", "{90EC93E7-3838-4DDF-ABB1-936D5E84F606}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSimpleSDP", "libSimpleSDP\libSimpleSDP.vcxproj", "{68A6EB15-688A-479A-8133-1E9FF2D018EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90EC93E7-3838-4DDF-ABB1-936D5E84F606}.Debug|Win32.ActiveCfg = Debug|Win32
-		{90EC93E7-3838-4DDF-ABB1-936D5E84F606}.Debug|Win32.Build.0 = Debug|Win32
-		{90EC93E7-3838-4DDF-ABB1-936D5E84F606}.Release|Win32.ActiveCfg = Release|Win32
-		{90EC93E7-3838-4DDF-ABB1-936D5E84F606}.Release|Win32.Build.0 = Release|Win32
+		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Debug|Win32.Build.0 = Debug|Win32
+		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Release|Win32.ActiveCfg = Release|Win32
+		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
