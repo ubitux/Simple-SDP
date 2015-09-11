@@ -1,12 +1,6 @@
 #ifndef SDP_H
 #define SDP_H
 
-#ifdef LIBSIMPLESDP_EXPORTS
-#define LIBSIMPLESDP_API __declspec(dllexport)
-#else
-#define LIBSIMPLESDP_API __declspec(dllimport)
-#endif
-
 #include <time.h>
 
 struct sdp_connection {
