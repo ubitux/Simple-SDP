@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <memory.h>
 #include "sdp.h"
 
 #ifdef _MSC_VER
