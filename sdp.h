@@ -3,22 +3,26 @@
 
 #include <time.h>
 
-struct sdp_connection {
+struct sdp_connection
+{
     char *nettype;
     char *addrtype;
     char *address;
 };
 
-struct sdp_bandwidth {
+struct sdp_bandwidth
+{
     char *bwtype;
     char *bandwidth;
 };
 
-struct sdp_payload {
+struct sdp_payload
+{
     char *_payload;
 
     unsigned char proto_version;
-    struct sdp_origin {
+    struct sdp_origin
+    {
         char *username;
         long long int sess_id;
         long long int sess_version;
@@ -36,10 +40,12 @@ struct sdp_payload {
     struct sdp_connection conn;
     struct sdp_bandwidth *bw;
     size_t bw_count;
-    struct sdp_time {
+    struct sdp_time
+    {
         time_t start_time;
         time_t stop_time;
-        struct sdp_repeat {
+        struct sdp_repeat
+        {
             time_t interval;
             time_t duration;
             time_t *offsets;
@@ -48,7 +54,8 @@ struct sdp_payload {
         size_t repeat_count;
     } *times;
     size_t times_count;
-    struct sdp_zone_adjustments {
+    struct sdp_zone_adjustments
+    {
         time_t adjust;
         time_t offset;
     } *zone_adjustments;
@@ -56,8 +63,10 @@ struct sdp_payload {
     char *encrypt_key;
     char **attributes;
     size_t attributes_count;
-    struct sdp_media {
-        struct sdp_info {
+    struct sdp_media
+    {
+        struct sdp_info
+        {
             char *type;
             int port;
             int port_n;

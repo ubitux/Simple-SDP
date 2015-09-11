@@ -22,11 +22,12 @@ int main(void)
 {
     size_t i;
 
-    for (i = 0; i < sizeof(files) / sizeof(*files); i++) {
+    for(i = 0; i < sizeof(files) / sizeof(*files); i++)
+    {
         FILE* pFile;
         errno_t fopenError = fopen_s(&pFile, files[i], "rb");
         struct sdp_payload *sdp;
-        char payload[1024+1];
+        char payload[1024 + 1];
         size_t n;
 
         if(0 != fopenError)
@@ -37,18 +38,19 @@ int main(void)
 
         fseek(pFile, 0, SEEK_END);
 
-      long  fileSize = ftell(pFile);
+        long  fileSize = ftell(pFile);
 
-      rewind(pFile);
+        rewind(pFile);
 
-      memset(payload, 0x0, 1025);
+        memset(payload, 0x0, 1025);
 
-      n = fread(payload, fileSize, 1, pFile);
-        if (n < 0) {
+        n = fread(payload, fileSize, 1, pFile);
+        if(n < 0)
+        {
             perror("fread");
             return 1;
         }
-       // payload[n] = 0;
+        // payload[n] = 0;
         sdp = sdp_parse(payload);
         printf("[%s]\n", files[i]);
         sdp_dump(sdp);
