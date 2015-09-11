@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSimpleSDP", "libSimpleSDP\libSimpleSDP.vcxproj", "{68A6EB15-688A-479A-8133-1E9FF2D018EF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{6B73B64E-5350-44B7-9CF4-F7C8180C2392}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Debug|Win32.Build.0 = Debug|Win32
 		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Release|Win32.ActiveCfg = Release|Win32
 		{68A6EB15-688A-479A-8133-1E9FF2D018EF}.Release|Win32.Build.0 = Release|Win32
+		{6B73B64E-5350-44B7-9CF4-F7C8180C2392}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6B73B64E-5350-44B7-9CF4-F7C8180C2392}.Debug|Win32.Build.0 = Debug|Win32
+		{6B73B64E-5350-44B7-9CF4-F7C8180C2392}.Release|Win32.ActiveCfg = Release|Win32
+		{6B73B64E-5350-44B7-9CF4-F7C8180C2392}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
