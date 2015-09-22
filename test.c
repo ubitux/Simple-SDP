@@ -25,15 +25,14 @@ int main(void)
 
     for(i = 0; i < sizeof(files) / sizeof(*files); i++)
     {
-        FILE* pFile;
-        errno_t fopenError = fopen_s(&pFile, files[i], "rb");
+        FILE* pFile = fopen(files[i], "rb");
         struct sdp_payload *sdp;
         char payload[1024 + 1];
         size_t n;
 
-        if(0 != fopenError)
+        if(NULL == pFile)
         {
-            perror("fopen_s");
+            perror("fopen");
             return 1;
         }
 
