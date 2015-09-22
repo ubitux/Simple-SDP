@@ -468,9 +468,8 @@ void sdp_dump(struct sdp_payload *sdp)
     {
         printf("z=");
         for(i = 0; i < sdp->zone_adjustments_count; i++)
-            printf("%d %d%s", sdp->zone_adjustments[i].adjust,
-                   sdp->zone_adjustments[i].offset,
-                   (i + 1) < (sdp->zone_adjustments_count) ? " " : "");
+            printf("%d %d ", sdp->zone_adjustments[i].adjust,
+                   sdp->zone_adjustments[i].offset);
         printf("\n");
     }
 
