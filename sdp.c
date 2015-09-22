@@ -457,13 +457,13 @@ void sdp_dump(struct sdp_payload *sdp)
     for(i = 0; i < sdp->times_count; i++)
     {
         struct sdp_time *t = &sdp->times[i];
-        printf("t=%ld %ld\n", t->start_time, t->stop_time);
+        printf("t=%lld %lld\n", t->start_time, t->stop_time);
         for(j = 0; j < t->repeat_count; j++)
         {
             struct sdp_repeat *r = &t->repeat[j];
-            printf("r=%ld %ld", r->interval, r->duration);
+            printf("r=%lld %lld", r->interval, r->duration);
             for(k = 0; k < r->offsets_count; k++)
-                printf(" %ld", r->offsets[k]);
+                printf(" %lld", r->offsets[k]);
             printf("\n");
         }
     }
@@ -472,7 +472,7 @@ void sdp_dump(struct sdp_payload *sdp)
     {
         printf("z=");
         for(i = 0; i < sdp->zone_adjustments_count; i++)
-            printf("%d %d ", sdp->zone_adjustments[i].adjust,
+            printf("%lld %lld ", sdp->zone_adjustments[i].adjust,
                    sdp->zone_adjustments[i].offset);
         printf("\n");
     }
