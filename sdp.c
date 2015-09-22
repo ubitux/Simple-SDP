@@ -115,7 +115,7 @@ static char *split_values(char *p, char sep, char *fmt, ...)
 
 #define LOAD_FACULTATIVE_STR(k, field) do{if(key==k){field=value;p=load_next_entry(p,&key,&value);}}while(0)
 
-#define LOAD_MULTIPLE_FACULTATIVE_STR(k, field) do{while(key==k){ADD_ENTRY(field);field[field##_count-1]=value;p=load_next_entry(p,&key,&value);}while(0)
+#define LOAD_MULTIPLE_FACULTATIVE_STR(k, field) do{while(key==k){ADD_ENTRY(field);field[field##_count-1]=value;p=load_next_entry(p,&key,&value);}}while(0)
 
 #define ADD_ENTRY(field) do{field##_count++;if(!field){field=calloc(1,sizeof(*field));}else{int n=field##_count;field=realloc(field,sizeof(*field)*n);memset(&field[n-1],0,sizeof(*field));}if(!(field))goto fail;}while(0)
 
@@ -192,13 +192,42 @@ struct sdp_payload *sdp_parse(const char *payload)
     } while(0);
 
     /* Phone numbers */
-    LOAD_MULTIPLE_FACULTATIVE_STR('p', sdp->phones);
+    // LOAD_MULTIPLE_FACULTATIVE_STR('p', sdp->phones);
+    do
+    {
+        while(key == 'p')
+        {
+            ADD_ENTRY(sdp->phones);
+            sdp->phones[sdp->phones_count - 1] = value;
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Connection information */
-    GET_CONN_INFO(&sdp->conn);
+    // GET_CONN_INFO(&sdp->conn);
+    do
+    {
+        if(key == 'c')
+        {
+            struct sdp_connection* c = &sdp->conn;
+            split_values(value, ' ', "sss", &c->nettype, &c->addrtype, &c->address);
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Bandwidth fields */
-    GET_BANDWIDTH_INFO(sdp->bw);
+    // GET_BANDWIDTH_INFO(sdp->bw);
+    do
+    {
+        int n;
+        while(key == 'b')
+        {
+            ADD_ENTRY(sdp->bw);
+            n = sdp->bw_count - 1;
+            split_values(value, ':', "ss", &sdp->bw[n].bwtype, &sdp->bw[n].bandwidth);
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Time fields (at least one mandatory) */
     do
@@ -243,10 +272,27 @@ struct sdp_payload *sdp_parse(const char *payload)
     }
 
     /* Encryption key */
-    LOAD_FACULTATIVE_STR('k', sdp->encrypt_key);
+    // LOAD_FACULTATIVE_STR('k', sdp->encrypt_key);
+    do
+    {
+        if(key == 'k')
+        {
+            sdp->encrypt_key = value;
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Media attributes */
-    LOAD_MULTIPLE_FACULTATIVE_STR('a', sdp->attributes);
+    // LOAD_MULTIPLE_FACULTATIVE_STR('a', sdp->attributes);
+    do
+    {
+        while(key == 'a')
+        {
+            ADD_ENTRY(sdp->attributes);
+            sdp->attributes[sdp->attributes_count - 1] = value;
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Media descriptions */
     while(key == 'm')
@@ -267,11 +313,55 @@ struct sdp_payload *sdp_parse(const char *payload)
         }
         p = load_next_entry(p, &key, &value);
 
-        LOAD_FACULTATIVE_STR('i', md->title);
-        GET_CONN_INFO(&md->conn);
-        GET_BANDWIDTH_INFO(md->bw);
-        LOAD_FACULTATIVE_STR('k', md->encrypt_key);
-        LOAD_MULTIPLE_FACULTATIVE_STR('a', md->attributes);
+        // LOAD_FACULTATIVE_STR('i', md->title);
+        do
+        {
+            if(key == 'i')
+            {
+                md->title = value;
+                p = load_next_entry(p, &key, &value);
+            }
+        } while(0);
+        // GET_CONN_INFO(&md->conn);
+        do
+        {
+            if(key == 'c')
+            {
+                struct sdp_connection* c = &md->conn;
+                split_values(value, ' ', "sss", &c->nettype, &c->addrtype, &c->address);
+                p = load_next_entry(p, &key, &value);
+            }
+        } while(0);
+        // GET_BANDWIDTH_INFO(md->bw);
+        do
+        {
+            int n; while(key == 'b')
+            {
+                ADD_ENTRY(md->bw);
+                n = md->bw_count - 1;
+                split_values(value, ':', "ss", &md->bw[n].bwtype, &md->bw[n].bandwidth);
+                p = load_next_entry(p, &key, &value);
+            }
+        } while(0);
+        // LOAD_FACULTATIVE_STR('k', md->encrypt_key);
+        do
+        {
+            if(key == 'k')
+            {
+                md->encrypt_key = value;
+                p = load_next_entry(p, &key, &value);
+            }
+        } while(0);
+        // LOAD_MULTIPLE_FACULTATIVE_STR('a', md->attributes);
+        do
+        {
+            while(key == 'a')
+            {
+                ADD_ENTRY(md->attributes);
+                md->attributes[md->attributes_count - 1] = value;
+                p = load_next_entry(p, &key, &value);
+            }
+        } while(0);
     }
 
     return sdp;
