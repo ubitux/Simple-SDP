@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libSimpleSDP.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\sdp.h">
       <Filter>Header Files</Filter>
     </ClInclude>

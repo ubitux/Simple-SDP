@@ -79,7 +79,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\sdp.h" />
-    <ClInclude Include="libSimpleSDP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\sdp.c" />
