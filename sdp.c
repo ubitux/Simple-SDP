@@ -109,53 +109,15 @@ static char *split_values(char *p, char sep, char *fmt, ...)
     return p;
 }
 
-#define GET_CONN_INFO(connf_ptr) do {                              \
-    if (key == 'c') {                                              \
-        struct sdp_connection *c = connf_ptr;                      \
-        split_values(value, ' ', "sss", &c->nettype, &c->addrtype, \
-                     &c->address);                                 \
-        p = load_next_entry(p, &key, &value);                      \
-                }                                                              \
-} while (0)
+#define GET_CONN_INFO(connf_ptr) do{if(key=='c'){struct sdp_connection* c=connf_ptr;split_values(value,' ',"sss",&c->nettype,&c->addrtype,&c->address);p=load_next_entry(p,&key,&value);}}while(0)
 
-#define GET_BANDWIDTH_INFO(bw) do {                                \
-    int n;                                                         \
-                while (key == 'b') {                                           \
-        ADD_ENTRY(bw);                                             \
-        n = bw ## _count - 1;                                      \
-        split_values(value, ':', "ss", &bw[n].bwtype,              \
-                     &bw[n].bandwidth);                            \
-        p = load_next_entry(p, &key, &value);                      \
-                                        }                                                              \
-} while (0)
+#define GET_BANDWIDTH_INFO(bw) do{int n;while(key=='b'){ADD_ENTRY(bw);n=bw##_count-1;split_values(value,':',"ss",&bw[n].bwtype,&bw[n].bandwidth);p=load_next_entry(p,&key,&value);}}while(0)
 
-#define LOAD_FACULTATIVE_STR(k, field) do {                        \
-    if (key == k) {                                                \
-        field = value;                                             \
-        p = load_next_entry(p, &key, &value);                      \
-                }                                                              \
-} while (0)
+#define LOAD_FACULTATIVE_STR(k, field) do{if(key==k){field=value;p=load_next_entry(p,&key,&value);}}while(0)
 
-#define LOAD_MULTIPLE_FACULTATIVE_STR(k, field) do {               \
-                while (key == k) {                                             \
-        ADD_ENTRY(field);                                          \
-        field[field ## _count - 1] = value;                        \
-        p = load_next_entry(p, &key, &value);                      \
-                                        }                                                              \
-} while (0)
+#define LOAD_MULTIPLE_FACULTATIVE_STR(k, field) do{while(key==k){ADD_ENTRY(field);field[field##_count-1]=value;p=load_next_entry(p,&key,&value);}while(0)
 
-#define ADD_ENTRY(field) do {                                      \
-    field ## _count++;                                             \
-    if (!field) {                                                  \
-        field = calloc(1, sizeof(*field));                         \
-                } else {                                                       \
-        int n = field ## _count;                                   \
-        field = realloc(field, sizeof(*field) * n);                \
-        memset(&field[n - 1], 0, sizeof(*field));                  \
-                }                                                              \
-    if (!(field))                                                  \
-        goto fail;                                                 \
-} while (0)
+#define ADD_ENTRY(field) do{field##_count++;if(!field){field=calloc(1,sizeof(*field));}else{int n=field##_count;field=realloc(field,sizeof(*field)*n);memset(&field[n-1],0,sizeof(*field));}if(!(field))goto fail;}while(0)
 
 struct sdp_payload *sdp_parse(const char *payload)
 {
@@ -196,13 +158,38 @@ struct sdp_payload *sdp_parse(const char *payload)
     p = load_next_entry(p, &key, &value);
 
     /* Information field */
-    LOAD_FACULTATIVE_STR('i', sdp->information);
+    // LOAD_FACULTATIVE_STR('i', sdp->information);
+    do
+    {
+        if(key == 'i')
+        {
+            sdp->information = value;
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* URI field */
-    LOAD_FACULTATIVE_STR('u', sdp->uri);
+    // LOAD_FACULTATIVE_STR('u', sdp->uri);
+    do
+    {
+        if(key == 'u')
+        {
+            sdp->uri = value;
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Email addresses */
-    LOAD_MULTIPLE_FACULTATIVE_STR('e', sdp->emails);
+    // LOAD_MULTIPLE_FACULTATIVE_STR('e', sdp->emails);
+    do
+    {
+        while(key == 'e')
+        {
+            ADD_ENTRY(sdp->emails);
+            sdp->emails[sdp->emails_count - 1] = value;
+            p = load_next_entry(p, &key, &value);
+        }
+    } while(0);
 
     /* Phone numbers */
     LOAD_MULTIPLE_FACULTATIVE_STR('p', sdp->phones);
