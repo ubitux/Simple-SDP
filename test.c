@@ -26,7 +26,7 @@ int main(void)
     for(i = 0; i < sizeof(files) / sizeof(*files); i++)
     {
         FILE* pFile = fopen(files[i], "rb");
-        struct sdp_payload *sdp;
+        sdp_payload *sdp;
         char payload[1024 + 1];
         size_t n;
 
