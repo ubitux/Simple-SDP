@@ -5,6 +5,10 @@
 #include <stdarg.h>
 #include "sdp.h"
 
+#ifdef _MSC_VER
+#define strdup _strdup
+#endif // _MSC_VER
+
 static char *load_next_entry(char *p, char *key, char **value)
 {
     char *endl;
@@ -127,7 +131,7 @@ struct sdp_payload *sdp_parse(const char *payload)
     if(!sdp)
         goto fail;
 
-    p = sdp->_payload = _strdup(payload);
+    p = sdp->_payload = strdup(payload);
     if(!p)
         goto fail;
 
