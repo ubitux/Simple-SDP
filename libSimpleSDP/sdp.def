@@ -1,0 +1,7 @@
+LIBRARY
+EXPORTS
+    sdp_parse           @1
+    sdp_destroy         @2
+    sdp_dump            @3
+    sdp_get_attr        @4
+    sdp_has_flag_attr   @5
